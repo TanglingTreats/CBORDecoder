@@ -1,1 +1,1 @@
-Main-Class: CBORDecoder
+Main-Class: com.tanglingtreats.CBORDecoder
