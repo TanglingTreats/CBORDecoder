@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.tanglingtreats</groupId>
+    <artifactId>CBORDecoder</artifactId>
+    <version>1.0-snapshot</version>
+    <name>CBORDecoder</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17.0.6</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <directory>${project.basedir}/out</directory>
+        <outputDirectory>${project.basedir}/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>CBORDecoder</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
