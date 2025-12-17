@@ -14,12 +14,14 @@ public class CBORDecoder extends Application {
     public void start(Stage stage) throws Exception {
         scene = new Scene(loadFXML("main"));
 
+        stage.setTitle("CBOR Decoder");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-         FXMLLoader loader = new FXMLLoader(CBORDecoder.class.getResource(fxml + ".fxml"));
+    private static Parent loadFXML(String fileName) throws IOException {
+        FXMLLoader loader = new FXMLLoader(CBORDecoder.class.getClassLoader().getResource(fileName + ".fxml"));
          return loader.load();
     }
 

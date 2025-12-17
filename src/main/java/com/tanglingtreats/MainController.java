@@ -1,10 +1,12 @@
 package com.tanglingtreats;
 
+import com.tanglingtreats.templates.Template;
+import com.tanglingtreats.templates.TemplateFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
@@ -21,10 +23,13 @@ public class MainController implements Initializable {
     @FXML
     ChoiceBox<String> formatChoices;
 
+    @FXML
+    Button convertBtn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> formats = FXCollections.observableArrayList(
-          "None"
+                Template.Type.STRINGS
         );
 
         formatChoices.setItems(formats);
@@ -36,5 +41,11 @@ public class MainController implements Initializable {
         String selectedFormat = formatChoices.getSelectionModel().getSelectedItem();
 
         System.out.println("Selected format: " + selectedFormat);
+
+        Template template = TemplateFactory.getTemplate(selectedFormat);
+
+        String input = inputBox.getText();
+
+        outputBox.setText(template.decode(input));
     }
 }

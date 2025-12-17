@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tanglingtreats.MainController"
+            prefHeight="400.0" prefWidth="600.0" >
+    <TextArea fx:id="inputBox" promptText="Paste your hex here" HBox.hgrow="ALWAYS"/>
+    <VBox minWidth="-Infinity" alignment="CENTER" spacing="10">
+        <ChoiceBox fx:id="formatChoices"/>
+        <Button fx:id="convertBtn" text="Convert" onAction="#handleFormatAction"/>
+    </VBox>
+    <TextArea fx:id="outputBox" promptText="Results will appear here" HBox.hgrow="ALWAYS"/>
+
+</HBox>
