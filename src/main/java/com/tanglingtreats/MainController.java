@@ -42,10 +42,8 @@ public class MainController implements Initializable {
 
         System.out.println("Selected format: " + selectedFormat);
 
-        Template template = TemplateFactory.getTemplate(selectedFormat);
-
         String input = inputBox.getText();
 
-        outputBox.setText(template.decode(input));
+        outputBox.setText(Decoder.decode(input));
     }
 }

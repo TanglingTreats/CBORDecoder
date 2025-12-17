@@ -1,11 +1,14 @@
 package com.tanglingtreats.templates;
 
 import com.tanglingtreats.Formatting;
+import com.tanglingtreats.Util;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class Template {
+    public static final String ERR_INVALID_INPUT = "The input is not a valid CBOR.";
+
     public enum Type {
         NONE("No template"),
         KEYMINT("Keymint");
@@ -37,34 +40,15 @@ public class Template {
         }
     }
 
-    private Type templateType = Type.NONE;
+    protected Type templateType = Type.NONE;
+
+    public Template() {
+
+    }
+
 
     public Type getTemplateType() {
         return templateType;
-    }
-
-    public String encode(String input) {
-        String result = "12340987";
-
-        return result;
-    }
-
-    public String decode(String input) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("81");
-        sb.append(Formatting.NEWLINE);
-
-        sb.append(Formatting.TAB);
-        sb.append("82");
-        sb.append(Formatting.NEWLINE);
-
-        sb.append(Formatting.TAB);
-        sb.append(Formatting.TAB);
-        sb.append("83");
-        sb.append(Formatting.NEWLINE);
-
-        return sb.toString();
     }
 
 }
