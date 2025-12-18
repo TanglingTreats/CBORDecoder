@@ -44,6 +44,6 @@ public class MainController implements Initializable {
 
         String input = inputBox.getText();
 
-        outputBox.setText(Decoder.decode(input));
+        outputBox.setText(Decoder.decode(input, Template.Type.valueOfLabel(selectedFormat)));
     }
 }

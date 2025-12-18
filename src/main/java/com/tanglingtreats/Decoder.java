@@ -19,7 +19,7 @@ public class Decoder {
      * @param input
      * @return
      */
-    public static String decode(String input) {
+    public static String decode(String input, Template.Type type) {
 
         if (input.length() % 2 != 0) {
             return Template.ERR_INVALID_INPUT;
