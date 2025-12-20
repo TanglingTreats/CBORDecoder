@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CBORDecoder.iml" filepath="$PROJECT_DIR$/CBORDecoder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CBORDecoder.iml" filepath="$PROJECT_DIR$/.idea/CBORDecoder.iml" />
     </modules>
   </component>
 </project>
