@@ -1,7 +1,7 @@
 package com.tanglingtreats;
 
-import com.tanglingtreats.templates.Template;
-import com.tanglingtreats.templates.TemplateFactory;
+import com.tanglingtreats.template.Template;
+import com.tanglingtreats.template.TemplateFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,7 +45,7 @@ public class MainController implements Initializable {
         String input = inputBox.getText();
 
         if (!isHexadecimal(input)) {
-            setToOutput(Template.ERR_INVALID_INPUT);
+            setToOutput(Constants.ERR_INVALID_FORMAT);
         }
 
         Template template = TemplateFactory.getTemplate(selectedFormat);

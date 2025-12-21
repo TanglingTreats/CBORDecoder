@@ -1,6 +1,8 @@
 package com.tanglingtreats;
 
-import com.tanglingtreats.templates.Template;
+import com.tanglingtreats.exception.InvalidCBORFormatException;
+import com.tanglingtreats.exception.InvalidCBORTypeException;
+import com.tanglingtreats.template.Template;
 
 import java.io.ByteArrayInputStream;
 
@@ -56,7 +58,7 @@ public class Decoder {
         try {
             StringBuilder itemSB = new StringBuilder();
             if (input.length() % 2 != 0) {
-                throw new Exception(Template.ERR_INVALID_INPUT);
+                throw new Exception(Constants.ERR_INVALID_FORMAT);
             }
 
             int offset = 0;
@@ -71,18 +73,20 @@ public class Decoder {
 
             short adType = getADType(b);
             if (majorType == -1) {
-                return Template.ERR_INVALID_INPUT;
+                return Constants.ERR_INVALID_FORMAT;
             }
 
             switch(majorType) {
                 case 0:
                     itemSB.append(readInt(b, adType, baStream));
                     break;
+                default:
+                    throw new InvalidCBORTypeException(Constants.ERR_INVALID_FORMAT);
             }
             offset += adType;
 
             if (baStream.available() != 0) {
-                throw new Exception(Template.ERR_INVALID_INPUT);
+                throw new InvalidCBORFormatException(Constants.ERR_INVALID_FORMAT);
             }
 
             mainSB.append(itemSB);
@@ -115,7 +119,7 @@ public class Decoder {
     private static long readInt(int b, short adType, ByteArrayInputStream baInputStream) {
 
         if (adType != 0 && baInputStream.available() < adType) {
-            throw new NumberFormatException(Template.ERR_INVALID_INPUT);
+            throw new NumberFormatException(Constants.ERR_INVALID_FORMAT);
         }
 
         if (adType == 0) {

@@ -1,13 +1,9 @@
-package com.tanglingtreats.templates;
-
-import com.tanglingtreats.Formatting;
-import com.tanglingtreats.Util;
+package com.tanglingtreats.template;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class Template {
-    public static final String ERR_INVALID_INPUT = "The input is not a valid CBOR.";
 
     public enum Type {
         NONE("No template"),

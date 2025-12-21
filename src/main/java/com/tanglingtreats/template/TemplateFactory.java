@@ -1,4 +1,4 @@
-package com.tanglingtreats.templates;
+package com.tanglingtreats.template;
 
 public class TemplateFactory {
     public static Template getTemplate(String type) {

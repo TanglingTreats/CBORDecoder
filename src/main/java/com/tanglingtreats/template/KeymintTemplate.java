@@ -1,4 +1,4 @@
-package com.tanglingtreats.templates;
+package com.tanglingtreats.template;
 
 public class KeymintTemplate extends Template {
 
