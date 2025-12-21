@@ -44,6 +44,29 @@ public class MainController implements Initializable {
 
         String input = inputBox.getText();
 
-        outputBox.setText(Decoder.decode(input, Template.Type.valueOfLabel(selectedFormat)));
+        if (!isHexadecimal(input)) {
+            setToOutput(Template.ERR_INVALID_INPUT);
+        }
+
+        Template template = TemplateFactory.getTemplate(selectedFormat);
+
+        setToOutput(Decoder.decode(input, template));
+    }
+
+    private void setToInput(String input) {
+        inputBox.setText(input);
+    }
+
+    private void setToOutput(String input) {
+        outputBox.setText(input);
+    }
+
+    private boolean isHexadecimal(String input) throws NumberFormatException {
+        try {
+            Long.parseLong(input, 16);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
