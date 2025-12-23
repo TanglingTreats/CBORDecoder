@@ -1,5 +1,6 @@
 package com.tanglingtreats;
 
+import com.tanglingtreats.exception.InvalidCBORFormatException;
 import com.tanglingtreats.template.Template;
 import com.tanglingtreats.template.TemplateFactory;
 import javafx.collections.FXCollections;
@@ -46,11 +47,11 @@ public class MainController implements Initializable {
 
         if (!isHexadecimal(input)) {
             setToOutput(Constants.ERR_INVALID_FORMAT);
+        } else {
+            Template template = TemplateFactory.getTemplate(selectedFormat);
+
+            setToOutput(Decoder.decode(input, template));
         }
-
-        Template template = TemplateFactory.getTemplate(selectedFormat);
-
-        setToOutput(Decoder.decode(input, template));
     }
 
     private void setToInput(String input) {

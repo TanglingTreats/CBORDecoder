@@ -1,12 +1,22 @@
 package com.tanglingtreats;
 
+import com.tanglingtreats.exception.FeatureNotYetImplemented;
 import com.tanglingtreats.exception.InvalidCBORFormatException;
 import com.tanglingtreats.exception.InvalidCBORTypeException;
 import com.tanglingtreats.template.Template;
 
 import java.io.ByteArrayInputStream;
+import java.util.Map;
 
 public class Decoder {
+    private static boolean IS_INDEFINITE = false;
+
+    /**
+     * Resets flags
+     */
+    private static void reset() {
+        IS_INDEFINITE = false;
+    }
 
     /**
      * Get major type of byte value
@@ -66,24 +76,43 @@ public class Decoder {
             ByteArrayInputStream baStream = new ByteArrayInputStream(ba);
 
 
-            int b = baStream.read();
+            int currentByte = baStream.read();
 
-            int majorType = getMajorType(b);
+            int majorType = getMajorType(currentByte);
             ++offset;
 
-            short adType = getADType(b);
             if (majorType == -1) {
                 return Constants.ERR_INVALID_FORMAT;
             }
 
             switch(majorType) {
                 case 0:
-                    itemSB.append(readInt(b, adType, baStream));
+                    short adType = getADType(currentByte);
+                    offset += adType;
+                    itemSB.append(readInt(currentByte, adType, baStream));
                     break;
+                case 4:
+                    int arrLen = getAD(currentByte);
+
+                    if (arrLen == 0x1F) IS_INDEFINITE = true;
+
+                    if(IS_INDEFINITE) {
+                        mainSB.append("is array with indefinite items");
+                    } else {
+                        mainSB.append("is array with: " + arrLen + " items");
+                    }
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    throw new FeatureNotYetImplemented(Constants.ERR_NOT_IMPL);
                 default:
                     throw new InvalidCBORTypeException(Constants.ERR_INVALID_FORMAT);
             }
-            offset += adType;
 
             if (baStream.available() != 0) {
                 throw new InvalidCBORFormatException(Constants.ERR_INVALID_FORMAT);
@@ -99,6 +128,7 @@ public class Decoder {
             System.out.println(e.getStackTrace());
         }
 
+        reset();
 
         return mainSB.toString();
     }
