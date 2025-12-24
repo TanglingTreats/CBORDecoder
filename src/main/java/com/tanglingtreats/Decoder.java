@@ -85,13 +85,13 @@ public class Decoder {
                 return Constants.ERR_INVALID_FORMAT;
             }
 
-            switch(majorType) {
-                case 0:
+            switch(MajorType.values()[majorType]) {
+                case UINT:
                     short adType = getADType(currentByte);
                     offset += adType;
                     itemSB.append(readInt(currentByte, adType, baStream));
                     break;
-                case 4:
+                case ARRAY:
                     int arrLen = getAD(currentByte);
 
                     if (arrLen == 0x1F) IS_INDEFINITE = true;
@@ -102,13 +102,12 @@ public class Decoder {
                         mainSB.append("is array with: " + arrLen + " items");
                     }
                     break;
-                case 1:
-                case 2:
-                case 3:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
+                case INT:
+                case TXT:
+                case BYTE_STR:
+                case MAP:
+                case TAG:
+                case FLOAT:
                     throw new FeatureNotYetImplemented(Constants.ERR_NOT_IMPL);
                 default:
                     throw new InvalidCBORTypeException(Constants.ERR_INVALID_FORMAT);
