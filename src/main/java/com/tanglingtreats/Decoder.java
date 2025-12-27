@@ -6,7 +6,6 @@ import com.tanglingtreats.exception.InvalidCBORTypeException;
 import com.tanglingtreats.template.Template;
 
 import java.io.ByteArrayInputStream;
-import java.util.Map;
 
 public class Decoder {
     private static boolean IS_INDEFINITE = false;
@@ -32,7 +31,7 @@ public class Decoder {
     }
 
     /**
-     * Get additional data
+     * Get additional data type from byte
      * @param value
      * @return
      */
@@ -57,24 +56,21 @@ public class Decoder {
 
 
     /**
-     * Decodes a CBOR-formatted string into JSON-style string
+     * Decodes a CBOR-formatted string into JSON-style string.
+     * Check if starting type is ARRAY or MAP, loop until end of element.
      * @param input
      * @return
      */
-    public static String decode(String input, Template template) {
+    public static String decode(byte[] input, Template template) {
 
         StringBuilder mainSB = new StringBuilder();
 
         try {
             StringBuilder itemSB = new StringBuilder();
-            if (input.length() % 2 != 0) {
-                throw new Exception(Constants.ERR_INVALID_FORMAT);
-            }
 
             int offset = 0;
-            byte[] ba = Util.hexStringToByteArray(input);
-            ByteArrayInputStream baStream = new ByteArrayInputStream(ba);
 
+            ByteArrayInputStream baStream = new ByteArrayInputStream(input);
 
             int currentByte = baStream.read();
 
@@ -93,13 +89,13 @@ public class Decoder {
                     break;
                 case ARRAY:
                     int arrLen = getAD(currentByte);
-
                     if (arrLen == 0x1F) IS_INDEFINITE = true;
 
                     if(IS_INDEFINITE) {
                         mainSB.append("is array with indefinite items");
                     } else {
                         mainSB.append("is array with: " + arrLen + " items");
+
                     }
                     break;
                 case INT:
@@ -108,6 +104,12 @@ public class Decoder {
                 case MAP:
                 case TAG:
                 case FLOAT:
+                    if (getAD(currentByte) == Constants.BREAK_CODE) { // End of MAP or ARRAY
+                        if(!IS_INDEFINITE) {
+                            throw new InvalidCBORFormatException(Constants.ERR_UNEXPCTED_BREAK);
+                        }
+                        mainSB.append(Formatting.BREAK);
+                    }
                     throw new FeatureNotYetImplemented(Constants.ERR_NOT_IMPL);
                 default:
                     throw new InvalidCBORTypeException(Constants.ERR_INVALID_FORMAT);

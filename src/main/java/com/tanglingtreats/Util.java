@@ -11,4 +11,13 @@ public class Util {
         }
         return data;
     }
+
+    public static boolean isHexadecimal(String input) throws NumberFormatException {
+        try {
+            Long.parseLong(input, 16);
+            return true;
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(Constants.ERR_INVALID_FORMAT);
+        }
+    }
 }

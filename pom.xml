@@ -14,11 +14,16 @@
     </properties>
 
     <dependencies>
-        <dependency>
+      <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17.0.12</version>
         </dependency>
+	<dependency>
+	  <groupId>org.openjfx</groupId>
+	  <artifactId>javafx-graphics</artifactId>
+	  <version>17.0.12</version>
+	</dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -30,7 +35,7 @@
         <directory>${project.basedir}/out</directory>
         <outputDirectory>${project.basedir}/classes</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.openjfx</groupId>
@@ -40,6 +45,6 @@
                     <mainClass>com.tanglingtreats.CBORDecoder</mainClass>
                 </configuration>
             </plugin>
-        </plugins>
+	</plugins>
     </build>
 </project>

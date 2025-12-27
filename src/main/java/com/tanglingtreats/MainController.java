@@ -45,12 +45,12 @@ public class MainController implements Initializable {
 
         String input = inputBox.getText();
 
-        if (!isHexadecimal(input)) {
+        if (!Util.isHexadecimal(input)) {
             setToOutput(Constants.ERR_INVALID_FORMAT);
         } else {
             Template template = TemplateFactory.getTemplate(selectedFormat);
-
-            setToOutput(Decoder.decode(input, template));
+            byte[] ba = Util.hexStringToByteArray(input);
+            setToOutput(Decoder.decode(ba, template));
         }
     }
 
@@ -62,12 +62,4 @@ public class MainController implements Initializable {
         outputBox.setText(input);
     }
 
-    private boolean isHexadecimal(String input) throws NumberFormatException {
-        try {
-            Long.parseLong(input, 16);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 }
